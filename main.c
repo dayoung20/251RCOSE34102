@@ -16,7 +16,7 @@ int main(){
 
     process = (Process *)malloc(sizeof(Process) * process_count);
     
-    // 사용자로부터 프로세스 정보 입력력
+    // 사용자로부터 프로세스 정보 입력
     printf("각 프로세스의 id 도착시간 우선순위를 알려주세요: ex. P0 3 5 2 \n");
 
 
@@ -35,5 +35,9 @@ int main(){
         printf("ID: %s, Arrival: %d, Burst: %d, Priority: %d\n",
             process[i].id, process[i].arrive_time, process[i].cpu_burst, process[i].priority);
     }
+    // 전체 프로세스 초기화
+    process_init(process, process_count);
+
+    FCFS(process, process_count);
 
 }
