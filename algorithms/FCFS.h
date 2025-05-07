@@ -12,7 +12,7 @@
  * @param process 프로세스 배열
  * @param process_count 프로세스 개수
  */
-void fcfs_gantt_chart(Process *process, int process_count)
+void fcfs_gantt(Process *process, int process_count)
 {
 	int i, j;
 
@@ -134,13 +134,14 @@ void FCFS(Process *process, int process_count)
 	printf("\nFirst Come First Served\n\n");
 
     // 간트 차트 출력
-	fcfs_gantt_chart(process, process_count);
+	fcfs_gantt(process, process_count);
 	
 	/* 평균 대기시간, 턴어라운드 타임, 응답 시간 출력 */
 	printf("\nAverage Waiting Time     : %-2.2lf\n", (double)total_waiting_time / (double)process_count);
 	printf("Average Turnaround Time  : %-2.2lf\n", (double)total_turnaround_time / (double)process_count);
-	printf("Average Response Time    : %-2.2lf\n\n", (double)total_response_time / (double)process_count);
+	// printf("Average Response Time    : %-2.2lf\n\n", (double)total_response_time / (double)process_count);
 
+    //각 프로세스 별 정보 출력
 	print_table(process, process_count);
 }
 

@@ -38,6 +38,14 @@ int main(){
     // 전체 프로세스 초기화
     process_init(process, process_count);
 
+    printf("<FCFS>");
     FCFS(process, process_count);
+
+    printf("\n\n");
+
+    printf("<SJF>");
+    SJF(process, process_count);
+
+    printf("\n\n");
 
 }

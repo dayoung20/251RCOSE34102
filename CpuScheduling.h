@@ -5,5 +5,6 @@
 
 // FCFS 알고리즘 헤더
 #include "./algorithms/FCFS.h"
+#include "./algorithms/SJF.h"
 
 #endif
