@@ -1,18 +1,18 @@
-#ifndef __SJF__
-#define __SJF__
+#ifndef __NP_SJF__
+#define __NP_SJF__
 
-/* (SJF) Shortest Job First Algorithm */
+/* (np SJF) Non Preemptive Shortest Job First Algorithm */
 
 /* 헤더 */
 #include "../functions.h"
 #include "../table.h"
 
 /**
- * SJF 알고리즘 시간 계산 함수
+ * np SJF 알고리즘 시간 계산 함수
  * @param process   프로세스 배열
  * @param process_count 프로세스 개수
  */
-void sjf_calculate_time(Process *process, int process_count)
+void np_sjf_calculate_time(Process *process, int process_count)
 {
 	int i, j;
 
@@ -81,11 +81,11 @@ void sjf_calculate_time(Process *process, int process_count)
 }
 
 /**
- * sjf 간트 차트 출력 함수
+ * np sjf 간트 차트 출력 함수
  * @param process   프로세스 배열
  * @param process_count 프로세스 개수
  */
-void sjf_gantt(Process *process, int process_count)
+void np_sjf_gantt(Process *process, int process_count)
 {
 	int i, j;
 
@@ -144,11 +144,11 @@ void sjf_gantt(Process *process, int process_count)
 }
 
 /**
- * Shortest Job First 
+ * np Shortest Job First 
  * @param process   프로세스 배열
  * @param process_count 프로세스 개수
  */
-void SJF(Process *process, int process_count)
+void npSJF(Process *process, int process_count)
 {
 	int i;
 
@@ -167,7 +167,7 @@ void SJF(Process *process, int process_count)
     // 도착 시간을 기준으로 정렬
 	merge_sort_by_arrive_time(process, 0, process_count);
 
-	sjf_calculate_time(process, process_count);
+	np_sjf_calculate_time(process, process_count);
 
     // turnaround time, waiting time 계산
 	for (i = 0; i < process_count; i++)
@@ -189,8 +189,8 @@ void SJF(Process *process, int process_count)
     // quick_sort_by_return_time 함수 호출로 반환 시간으로 정렬
 	quick_sort_by_return_time(process, process_count);
 
-    // sjf_print_gantt_chart 함수 호출로 간트 차트 출력
-	sjf_gantt(process, process_count);
+    //간트 차트 출력
+	np_sjf_gantt(process, process_count);
 	
 	/* 평균 대기시간, 턴어라운드 타임, 응답 시간 출력 */
 	printf("\nAverage Waiting Time     : %-2.2lf\n", (double)total_waiting_time / (double)process_count);

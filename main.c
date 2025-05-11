@@ -43,9 +43,12 @@ int main(){
 
     printf("\n\n");
 
-    printf("<SJF>");
-    SJF(process, process_count);
+    printf("<non preemptive SJF>");
+    npSJF(process, process_count);
 
     printf("\n\n");
+
+    printf("<preemptive SJF>");
+    pSJF(process, process_count);
 
 }
