@@ -7,5 +7,6 @@
 #include "./algorithms/FCFS.h"
 #include "./algorithms/non_preemptiveSJF.h"
 #include "./algorithms/preemptiveSJF.h"
-
+#include "./algorithms/preemptiveP.h"
+#include "./algorithms/non_preemptiveP.h"
 #endif

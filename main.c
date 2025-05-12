@@ -51,4 +51,10 @@ int main(){
     printf("<preemptive SJF>");
     pSJF(process, process_count);
 
+    printf("<preemptive priority>");
+    PPS(process, process_count);
+
+    printf("<non preemptive priority>");
+    NPPS(process, process_count);
+
 }
