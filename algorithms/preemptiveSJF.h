@@ -55,7 +55,7 @@ void psjf_calculate_time(Process *process, int process_count)
 		// 최소작업 인덱스를 INT_MAX로 초기화
 
 		/* 가장 마지막에 들어온 프로세스의 도착시간 보다 작을 경우 */
-		if (current_time <= process[process_count - 1].arrive_time)
+		if (current_time <= process[process_count - 1].arrival_time)
 		{
 			/* 프로세스의 갯수만큼 반복 */
 			for (i = 0; i < process_count; i++)
@@ -63,7 +63,7 @@ void psjf_calculate_time(Process *process, int process_count)
 				/* 완료되지 않았으며 도착시간이 현재시간보다 작거나 같으며
 				   현재 최소작업 시간보다 남은 실행시간이 작을 경우 */
 				if ((process[i].completed == FALSE)
-						&& (process[i].arrive_time <= current_time)
+						&& (process[i].arrival_time <= current_time)
 							&& (shortest_remain_time > remain_burst_time[i]))
 				{
 					shortest_remain_time = remain_burst_time[i];
@@ -112,7 +112,7 @@ void psjf_calculate_time(Process *process, int process_count)
 		{
 			process[k].completed = TRUE;
 			// 완료 상태로 변경
-			process[k].waiting_time = current_time - process[k].cpu_burst - process[k].arrive_time;
+			process[k].waiting_time = current_time - process[k].cpu_burst - process[k].arrival_time;
 			// 대기 시간 계산
 			process[k].return_time = current_time;
 			// 반환 시간 계산
@@ -158,12 +158,12 @@ void psjf_print_gantt_chart(Process *process, int process_count)
 	{
 		shortest_remain_time = INT_MAX;
 
-		if (current_time <= process[process_count - 1].arrive_time)
+		if (current_time <= process[process_count - 1].arrival_time)
 		{
 			for (i = 0; i < process_count; i++)
 			{
 				if ((process[i].completed == FALSE)
-						&& (process[i].arrive_time <= current_time))
+						&& (process[i].arrival_time <= current_time))
 				{
 					if (shortest_remain_time > remain_burst_time[i])
 					{
@@ -222,12 +222,12 @@ void psjf_print_gantt_chart(Process *process, int process_count)
 		{
 			shortest_remain_time = INT_MAX;
 
-			if (current_time <= process[process_count - 1].arrive_time)
+			if (current_time <= process[process_count - 1].arrival_time)
 			{
 				for (i = 0; i < process_count; i++)
 				{
 					if ((process[i].completed == FALSE)
-						&& (process[i].arrive_time <= current_time)
+						&& (process[i].arrival_time <= current_time)
 							&& (shortest_remain_time > remain_burst_time[i]))
 					{
 						shortest_remain_time = remain_burst_time[i];
@@ -333,12 +333,12 @@ void psjf_print_gantt_chart(Process *process, int process_count)
 	{
 		shortest_remain_time = INT_MAX;
 
-		if (current_time <= process[process_count - 1].arrive_time)
+		if (current_time <= process[process_count - 1].arrival_time)
 		{
 			for (i = 0; i < process_count; i++)
 			{
 				if ((process[i].completed == FALSE)
-					&& (process[i].arrive_time <= current_time)
+					&& (process[i].arrival_time <= current_time)
 						&& (shortest_remain_time > remain_burst_time[i]))
 				{
 					shortest_remain_time = remain_burst_time[i];
@@ -389,12 +389,12 @@ void psjf_print_gantt_chart(Process *process, int process_count)
 		{
 			shortest_remain_time = INT_MAX;
 
-			if (current_time <= process[process_count - 1].arrive_time)
+			if (current_time <= process[process_count - 1].arrival_time)
 			{
 				for (i = 0; i < process_count; i++)
 				{
 					if ((process[i].completed == FALSE)
-						&& (process[i].arrive_time <= current_time)
+						&& (process[i].arrival_time <= current_time)
 							&& (shortest_remain_time > remain_burst_time[i]))
 					{
 						shortest_remain_time = remain_burst_time[i];
@@ -482,8 +482,8 @@ void pSJF(Process *process, int process_count)
 	// process_init 함수 호출로 프로세스 초기화
 	process_init(process, process_count);
 	
-	// merge_sort_by_arrive_time 함수 호출로 도착 시간을 기준으로 정렬
-	merge_sort_by_arrive_time(process, 0, process_count);
+	// merge_sort_by_arrival_time 함수 호출로 도착 시간을 기준으로 정렬
+	merge_sort_by_arrival_time(process, 0, process_count);
 	
 	// psjf_calculate_time 함수 호출로 프로세스 시간 계산
 	psjf_calculate_time(process, process_count);
@@ -492,7 +492,7 @@ void pSJF(Process *process, int process_count)
 	/* 프로세스의 갯수 만큼 반복 */
 	for (i = 0; i < process_count; i++)
 	{
-		process[i].turnaround_time = process[i].return_time - process[i].arrive_time;
+		process[i].turnaround_time = process[i].return_time - process[i].arrival_time;
 		// 턴어라운드 타임 계산
 		total_waiting_time += process[i].waiting_time;
 		// 총 대기 시간 증가

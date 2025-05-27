@@ -26,7 +26,7 @@ void np_sjf_calculate_time(Process *process, int process_count)
     // 2. process 배열의 해당 인덱스 항목 update
 	process[0].completed = TRUE;
 	process[0].return_time = process[0].cpu_burst;
-	process[0].turnaround_time = process[0].cpu_burst - process[0].arrive_time;
+	process[0].turnaround_time = process[0].cpu_burst - process[0].arrival_time;
 	process[0].waiting_time = 0;
 	
     // 현재 시간을 첫번째 프로세스의 cpu burst로
@@ -58,7 +58,7 @@ void np_sjf_calculate_time(Process *process, int process_count)
 		{
 			/* 최소 작업 시간을 갖는 조건에 맞는 프로세스 탐색 */
 			if ((process[j].completed == FALSE)
-					&& (process[j].arrive_time <= time)
+					&& (process[j].arrival_time <= time)
 						&& (process[j].cpu_burst < process[min].cpu_burst))
 			{
                 // shortest job 프로세스 갱신
@@ -67,7 +67,7 @@ void np_sjf_calculate_time(Process *process, int process_count)
 		}
 
         // 실행할 프로세스 대기 시간 계산
-		process[min].waiting_time = time - process[min].arrive_time;
+		process[min].waiting_time = time - process[min].arrival_time;
 		// 실행 프로세스 완료 상태 변경
 		process[min].completed = TRUE;
         // 현재 시간 프로세스의 실행 시간만큼 증가
@@ -75,7 +75,7 @@ void np_sjf_calculate_time(Process *process, int process_count)
         // 프로세스 반환 시간 계산
 		process[min].return_time = time;
 		// 프로세스 턴어라운드 타임 계산
-		process[min].turnaround_time = process[min].return_time - process[min].arrive_time;
+		process[min].turnaround_time = process[min].return_time - process[min].arrival_time;
 		
 	}
 }
@@ -165,7 +165,7 @@ void npSJF(Process *process, int process_count)
 	process_init(process, process_count);
 
     // 도착 시간을 기준으로 정렬
-	merge_sort_by_arrive_time(process, 0, process_count);
+	merge_sort_by_arrival_time(process, 0, process_count);
 
 	np_sjf_calculate_time(process, process_count);
 
@@ -173,7 +173,7 @@ void npSJF(Process *process, int process_count)
 	for (i = 0; i < process_count; i++)
 	{
         // 프로세스의 반환 시간 계산 후 저장
-		process[i].return_time = process[i].turnaround_time + process[i].arrive_time;
+		process[i].return_time = process[i].turnaround_time + process[i].arrival_time;
 		// 프로세스의 응답 시간 저장
 		process[i].response_time = process[i].waiting_time;
 		// 총 대기 시간 증가

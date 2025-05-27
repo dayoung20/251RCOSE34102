@@ -25,7 +25,7 @@ void npps_calculate(Process *process, int process_count)
 
 	/* 가장 먼저 들어온 프로세스 실행 및 시간 계산 */
 	process[0].return_time = process[0].cpu_burst;
-	process[0].turnaround_time = process[0].return_time - process[0].arrive_time;
+	process[0].turnaround_time = process[0].return_time - process[0].arrival_time;
 	process[0].response_time = 0;
 	process[0].waiting_time = 0;
 	process[0].completed = TRUE;
@@ -41,7 +41,7 @@ void npps_calculate(Process *process, int process_count)
 		for (i = 1; i < process_count; i++)
 		{
 			// 실행되지 않은 프로세스 중에서 
-			if ((process[i].completed == FALSE) && (process[i].arrive_time <= time))
+			if ((process[i].completed == FALSE) && (process[i].arrival_time <= time))
 			{
 				// 프로세스 우선순위 높은 것 찾기 (priority는 작은 숫자가 높은 우선순위)
 				if (priority_idx == -1 || process[i].priority < process[priority_idx].priority)
@@ -56,10 +56,10 @@ void npps_calculate(Process *process, int process_count)
 			break;
 
 		// 현재 가장 우선순위가 높은 프로세스 수행
-		process[priority_idx].response_time = time - process[priority_idx].arrive_time;
-		process[priority_idx].waiting_time = time - process[priority_idx].arrive_time;
+		process[priority_idx].response_time = time - process[priority_idx].arrival_time;
+		process[priority_idx].waiting_time = time - process[priority_idx].arrival_time;
 		process[priority_idx].return_time = time + process[priority_idx].cpu_burst;
-		process[priority_idx].turnaround_time = process[priority_idx].return_time - process[priority_idx].arrive_time;
+		process[priority_idx].turnaround_time = process[priority_idx].return_time - process[priority_idx].arrival_time;
 		process[priority_idx].completed = TRUE;
 
 		time += process[priority_idx].cpu_burst;
@@ -153,7 +153,7 @@ void NPPS(Process *process, int process_count)
 	process_init(process, process_count);
 
 	// merge_sort_by_arrive_time 함수 호출로 도착 시간을 기준으로 정렬
-	merge_sort_by_arrive_time(process, 0, process_count);
+	merge_sort_by_arrival_time(process, 0, process_count);
 
 	// npps_calculate 함수 호출로 시간 계산
 	npps_calculate(process, process_count);

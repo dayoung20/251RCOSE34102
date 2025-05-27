@@ -28,7 +28,7 @@ void merge(Process arr[], int left, int mid, int right)
 	while (fIdx <= mid && rIdx <= right)
 	{
 		/* left의 도칙시간이 right보다 작을 경우 */
-		if (arr[fIdx].arrive_time <= arr[rIdx].arrive_time)
+		if (arr[fIdx].arrival_time <= arr[rIdx].arrival_time)
 			sortArr[sIdx] = arr[fIdx++];
 			// left의 데이터를 결과 배열에 복사
 
@@ -74,7 +74,7 @@ void merge(Process arr[], int left, int mid, int right)
  * @param left  배열의 가장 왼쪽 인덱스
  * @param right 배열의 가장 오른쪽 인덱스
  */
-void merge_sort_by_arrive_time(Process arr[], int left, int right)
+void merge_sort_by_arrival_time(Process arr[], int left, int right)
 {
     // 중간 지점 인덱스
 	int mid;
@@ -86,8 +86,8 @@ void merge_sort_by_arrive_time(Process arr[], int left, int right)
 		mid = (left + right) / 2;
 
 		/* 둘로 나눠서 각각을 정렬한다 */
-		merge_sort_by_arrive_time(arr, left, mid);
-		merge_sort_by_arrive_time(arr, mid + 1, right);
+		merge_sort_by_arrival_time(arr, left, mid);
+		merge_sort_by_arrival_time(arr, mid + 1, right);
 
 		/* 정렬된 두 배열을 병합한다 */
 		merge(arr, left, mid, right);

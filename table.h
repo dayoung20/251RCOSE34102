@@ -22,7 +22,7 @@ void print_table(Process p[], int n)
 	for (i = 0; i < n; i++)
 	{
 		printf("| %3s |     %3d    |     %3d     |    %3d   |     %3d     |      %3d        |      %3d     |        %3d      |\n",
-			p[i].id, p[i].cpu_burst, p[i].arrive_time, p[i].priority, p[i].return_time, p[i].response_time, p[i].waiting_time, p[i].turnaround_time);
+			p[i].id, p[i].cpu_burst, p[i].arrival_time, p[i].priority, p[i].return_time, p[i].response_time, p[i].waiting_time, p[i].turnaround_time);
 
 		puts("+-----+------------+-------------+----------+-------------+-----------------+--------------+-----------------+");
 	}

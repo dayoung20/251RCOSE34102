@@ -56,7 +56,7 @@ void rr_calculate_waiting_time(Process *process, int process_count, Quantum q)
 				/* 아직 응답 시간이 계산되지 않았을 경우 */
 				if (calc_response_time[i] == FALSE)
 				{
-					process[i].response_time = time - process[i].arrive_time;
+					process[i].response_time = time - process[i].arrival_time;
 					// 응답 시간 계산 후 저장
 					calc_response_time[i] = TRUE;
 					// 응답 시간 계산 처리
@@ -106,7 +106,7 @@ void rr_calculate_turnaround_time(Process *process, int process_count)
 
 	/* 프로세스의 갯수만큼 반복 */
 	for (i = 0; i < process_count; i++)
-		process[i].turnaround_time = process[i].cpu_burst + process[i].waiting_time - process[i].arrive_time;
+		process[i].turnaround_time = process[i].cpu_burst + process[i].waiting_time - process[i].arrival_time;
 		// 턴어라운드 타임 계산 후 저장
 }
 
@@ -394,8 +394,8 @@ void RR(Process *process, int process_count, Quantum quantum)
 	// process_init 함수 호출로 프로세스 초기화
 	process_init(process, process_count);
 
-	// merge_sort_by_arrive_time 함수 호출로 도착 시간을 기준으로 정렬
-	merge_sort_by_arrive_time(process, 0, process_count);
+	// merge_sort_by_arrival_time 함수 호출로 도착 시간을 기준으로 정렬
+	merge_sort_by_arrival_time(process, 0, process_count);
 
 	// rr_calculate_waiting_time 함수 호출로 대기 시간, 응답 시간 계산
 	rr_calculate_waiting_time(process, process_count, quantum);
@@ -408,7 +408,7 @@ void RR(Process *process, int process_count, Quantum quantum)
 	{
 		process[i].waiting_time = process[i].turnaround_time - process[i].cpu_burst;
 		// 대기 시간 계산 후 저장
-		process[i].return_time = process[i].arrive_time + process[i].cpu_burst + process[i].waiting_time;
+		process[i].return_time = process[i].arrival_time + process[i].cpu_burst + process[i].waiting_time;
 		// 반환 시간 계산 후 저장
 
 		total_waiting_time += process[i].waiting_time;

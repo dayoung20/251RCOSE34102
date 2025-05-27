@@ -19,7 +19,7 @@ int main(){
 
 
     while(i<process_count){
-        scanf("%s %d %d %d", process[i].id, &process[i].arrive_time, &process[i].cpu_burst, &process[i].priority);
+        scanf("%s %d %d %d", process[i].id, &process[i].arrival_time, &process[i].cpu_burst, &process[i].priority);
         i++;
     }
 
@@ -31,7 +31,7 @@ int main(){
 
     for (int i = 0; i < process_count; i++) {
         printf("ID: %s, Arrival: %d, Burst: %d, Priority: %d\n",
-            process[i].id, process[i].arrive_time, process[i].cpu_burst, process[i].priority);
+            process[i].id, process[i].arrival_time, process[i].cpu_burst, process[i].priority);
     }
     // 전체 프로세스 초기화
     process_init(process, process_count);

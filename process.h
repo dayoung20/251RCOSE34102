@@ -13,7 +13,7 @@
 typedef struct _process
 {
     char id[ID_LEN];       // 프로세스 ID 필드
-    int arrive_time;       // 도착 시간 필드
+    int arrival_time;       // 도착 시간 필드
     int waiting_time;      // 대기 시간 필드
     int return_time;       // 반환 시간 필드
     int turnaround_time;   // 턴어라운드 타임 필드
@@ -38,9 +38,9 @@ void process_init(Process process[], int process_count)
     for (i = 0; i < process_count; i++)
     {
         process[i].waiting_time = 0;  
-        process[i].waiting_time = 0;    
-        process[i].waiting_time = 0;  
-        process[i].waiting_time = FALSE;  
+        process[i].return_time = 0;    
+        process[i].response_time = 0;  
+        process[i].completed = FALSE;
     }
 }
 

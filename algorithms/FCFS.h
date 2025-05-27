@@ -100,12 +100,12 @@ void FCFS(Process *process, int process_count)
 
     // 도착 시간을 기준으로 정렬
 	// left : 0, right : process_count
-	merge_sort_by_arrive_time(process, 0, process_count);
+	merge_sort_by_arrival_time(process, 0, process_count);
 	
 	// 1. 첫 프로세스 먼저 실행
     // 2. process 배열의 해당 인덱스 항목 update
 	process[0].return_time = process[0].cpu_burst;
-	process[0].turnaround_time = process[0].return_time - process[0].arrive_time;
+	process[0].turnaround_time = process[0].return_time - process[0].arrival_time;
 	process[0].response_time = 0;
 	process[0].waiting_time = 0;
 
@@ -120,9 +120,9 @@ void FCFS(Process *process, int process_count)
 	{
 		// 1. 각 프로세스 먼저 실행
         // 2. process 배열의 해당 인덱스 항목 update
-		process[i].waiting_time = total_return_time - process[i].arrive_time;
+		process[i].waiting_time = total_return_time - process[i].arrival_time;
 		process[i].return_time = total_return_time + process[i].cpu_burst;
-		process[i].turnaround_time = process[i].return_time - process[i].arrive_time;
+		process[i].turnaround_time = process[i].return_time - process[i].arrival_time;
 		process[i].response_time = process[i].waiting_time;
 
 		// 3. 실행된 프로세스만큼 total 변수들 update
