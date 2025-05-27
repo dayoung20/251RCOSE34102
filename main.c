@@ -3,21 +3,19 @@
 
 int main(){
 
-    // 프로세스 개수 
     int process_count = 0;
     int i=0;
 
     Quantum quantum;
     Process *process;
 
-    // 사용자로부터 프로세스 개수 입력
     printf("프로세스 개수를 입력하세요: ");
     scanf("%d", &process_count);
 
     process = (Process *)malloc(sizeof(Process) * process_count);
     
     // 사용자로부터 프로세스 정보 입력
-    printf("각 프로세스의 id 도착시간 우선순위를 알려주세요: ex. P0 3 5 2 \n");
+    printf("각 프로세스의 id 도착시간 burst time 우선순위를 알려주세요: ex. P0 3 5 2 \n");
 
 
     while(i<process_count){
@@ -56,5 +54,8 @@ int main(){
 
     printf("<non preemptive priority>");
     NPPS(process, process_count);
+
+    printf("<Round Robin>");
+    RR(process, process_count, quantum);
 
 }

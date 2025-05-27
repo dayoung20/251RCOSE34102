@@ -9,7 +9,7 @@
 #define TRUE 1
 #define FALSE 0
 
-/* process */
+// process 
 typedef struct _process
 {
     char id[ID_LEN];       // 프로세스 ID 필드
@@ -23,25 +23,24 @@ typedef struct _process
     int completed;         // 완료 상태 필드
 } Process; 
 
-/* time quantum */
+// RR time quantum 
 typedef int Quantum; 
 
 /**
  * process 초기화 
- * @param p   process 배열
- * @param len process 갯수
+ * @param process   process 배열
+ * @param process_count process 갯수
  */
-void process_init(Process p[], int len)
+void process_init(Process process[], int process_count)
 {
     int i;
 
-    // process 갯수만큼 반복
-    for (i = 0; i < len; i++)
+    for (i = 0; i < process_count; i++)
     {
-        p[i].waiting_time = 0;   // waiting_time 초기화
-        p[i].waiting_time = 0;    // waiting_time 초기화
-        p[i].waiting_time = 0;  // waiting_time 초기화
-        p[i].waiting_time = FALSE;  // waiting_time 상태 초기화
+        process[i].waiting_time = 0;  
+        process[i].waiting_time = 0;    
+        process[i].waiting_time = 0;  
+        process[i].waiting_time = FALSE;  
     }
 }
 

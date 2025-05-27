@@ -34,10 +34,10 @@ void np_sjf_calculate_time(Process *process, int process_count)
 	
 	for(i = 1; i < process_count; i++)
 	{
-		/* 프로세스의 갯수 -1 만큼 반복 */
+		/* 첫번째 프로세스 제외 프로세스 수행 */
 		for (j = 1; j < process_count; j++)
 		{
-			/* 이미 완료된 프로세스일 경우 */
+			// 이미 완료된 프로세스일 경우 
 			if (process[j].completed == TRUE)
                 // 다음 인덱스로 이동
 				continue;
@@ -61,7 +61,7 @@ void np_sjf_calculate_time(Process *process, int process_count)
 					&& (process[j].arrive_time <= time)
 						&& (process[j].cpu_burst < process[min].cpu_burst))
 			{
-                // 최소 작업 프로세스 갱신
+                // shortest job 프로세스 갱신
 				min = j;
 			}
 		}

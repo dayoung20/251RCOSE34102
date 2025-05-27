@@ -467,7 +467,7 @@ void pps_print_gantt_chart(Process *process, int process_count)
 /**
  * preemptive priority 알고리즘 실행 함수
  * @param process   프로세스 배열
- * @param len 프로세스 개수
+ * @param process_count 프로세스 개수
  */
 void PPS(Process *process, int process_count)
 {

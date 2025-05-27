@@ -99,6 +99,7 @@ void FCFS(Process *process, int process_count)
 	process_init(process, process_count);
 
     // 도착 시간을 기준으로 정렬
+	// left : 0, right : process_count
 	merge_sort_by_arrive_time(process, 0, process_count);
 	
 	// 1. 첫 프로세스 먼저 실행

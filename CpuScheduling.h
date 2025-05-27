@@ -9,4 +9,5 @@
 #include "./algorithms/preemptiveSJF.h"
 #include "./algorithms/preemptiveP.h"
 #include "./algorithms/non_preemptiveP.h"
+#include "./algorithms/RR.h"
 #endif
