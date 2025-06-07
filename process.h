@@ -1,8 +1,6 @@
 #ifndef __PROCESS__
 #define __PROCESS__
 
-// process
-
 #include <stdio.h>
 #include <stdlib.h>
 #define ID_LEN 20
@@ -23,7 +21,7 @@ typedef struct _process
     int completed;         // 완료 상태 필드
 } Process; 
 
-// RR time quantum 
+// Round robin 스케줄링에서만 사용하는 time quantum
 typedef int Quantum; 
 
 /**

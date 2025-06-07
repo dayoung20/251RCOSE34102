@@ -19,15 +19,14 @@
 void pps_calculate_time(Process *process, int process_count)
 {
 	int i;
-	// 반복문에서 사용할 변수 선언
-	int priority;
 	// 우선순위를 저장할 변수 선언
-	int current_time = 0;
+	int priority;
 	// 현재 시간을 저장할 변수 선언 및 초기화
-	int total_burst_time = 0;
+	int current_time = 0;
 	// 총 실행 시간을 저장할 변수 선언
-	int k = 0;
+	int total_burst_time = 0;
 	// 현재 실행할 프로세스 번호를 저장할 번수 선언 및 초기화
+	int k = 0;
 
 	/* 각 프로세스 별 남은 실행 시간을 저장할 배열 동적 할당 */
 	int *remain_burst_time = (int *)malloc(sizeof(int) * process_count);
@@ -48,8 +47,8 @@ void pps_calculate_time(Process *process, int process_count)
 	/* 현재 시간이 총 실행 시간이 되기 전까지 반복 */
 	while (current_time < total_burst_time)
 	{
-		priority = INT_MAX;
 		// 우선순위를 INT_MAX로 초기화
+		priority = INT_MAX;
 
 		/* 가장 마지막에 들어온 프로세스의 도착시간 보다 작을 경우 */
 		if (current_time <= process[process_count - 1].arrival_time)
@@ -77,7 +76,7 @@ void pps_calculate_time(Process *process, int process_count)
 			/* 프로세스의 갯수만큼 반복 */
 			for (i = 0; i < process_count; i++)
 			{
-				/* 완료되지 않았으며 현재 우선순위간보다
+				/* 완료되지 않았으며 현재 우선순위보다
 				   우선순위가 작을 경우 */
 				if ((process[i].completed == FALSE)
 						&& (priority > process[i].priority))
@@ -93,10 +92,10 @@ void pps_calculate_time(Process *process, int process_count)
 		/* 선택된 프로세스가 처음 시작될 경우 */
 		if (count[k] == 0)
 		{
-			count[k]++;
 			// 초기 실행이 아님을 표시
-			process[k].response_time = current_time;
+			count[k]++;
 			// 실행중인 프로세스의 응답시간 저장
+			process[k].response_time = current_time;
 		}
 
 		remain_burst_time[k]--;
@@ -107,12 +106,12 @@ void pps_calculate_time(Process *process, int process_count)
 		/* 프로세스의 남은 실행 시간이 0이될 경우 */
 		if (remain_burst_time[k] == 0)
 		{
-			process[k].completed = TRUE;
 			// 완료 상태로 변경
-			process[k].waiting_time = current_time - process[k].cpu_burst - process[k].arrival_time;
+			process[k].completed = TRUE;
 			// 대기 시간 계산
-			process[k].return_time = current_time;
+			process[k].waiting_time = current_time - process[k].cpu_burst - process[k].arrival_time;
 			// 반환 시간 계산
+			process[k].return_time = current_time;
 		}
 	}
 
@@ -127,16 +126,16 @@ void pps_calculate_time(Process *process, int process_count)
  * @param process   프로세스 배열
  * @param process_count 프로세스 개수
  */
-void pps_print_gantt_chart(Process *process, int process_count)
+void pps_gantt(Process *process, int process_count)
 {
 	int i;
 	int total_burst_time = 0;
-	int current_time = 0, previous_time = 0;
 	// 이전 프로세스가 실행된 시간을 저장할 변수 추가 선언
-	int k, pre_k = 0;
+	int current_time = 0, previous_time = 0;
 	// 이전 프로세스 번호를 저장할 변수 추가 선언
-	int priority, num;
+	int k, pre_k = 0;
 	// 새로 실행된 프로세스 사이 거리를 저장할 변수 선언
+	int priority, num;
 
 	int *count = (int *)malloc(sizeof(int) * process_count);
 	int *remain_burst_time = (int *)malloc(sizeof(int) * process_count);
@@ -504,8 +503,8 @@ void PPS(Process *process, int process_count)
 
 	printf("\nPreemptive Priority Scheduling Algorithm\n\n");
 
-	pps_print_gantt_chart(process, process_count);
-	// pps_print_gantt_chart 함수 호출로 간트 차트 출력
+	pps_gantt(process, process_count);
+	// pps_gantt 함수 호출로 간트 차트 출력
 
 	/* 평균 대기시간, 턴어라운드 타임, 응답 시간 출력 */
 	printf("\nAverage Waiting Time     : %-2.2lf\n", (double)total_waiting_time / (double)process_count);

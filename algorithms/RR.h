@@ -10,9 +10,8 @@
 #include "../table.h"
 #include "../process.h"
 
-
 /**
- * [rr_calculate_waiting_time RR 알고리즘 대기 시간 계산 함수]
+ * RR 알고리즘 waiting time 계산 함수
  * @param process   프로세스 배열
  * @param process_count  프로세스 개수
  * @param q   time quantum
@@ -65,37 +64,35 @@ void rr_calculate_waiting_time(Process *process, int process_count, Quantum q)
 				/* 남은 시간이 시간 할당량보다 클 경우 */
 				if (remain_burst_time[i] > q)
 				{
-					time += q;
 					// 현재 시간 시간 할당량만큼 증가
-					remain_burst_time[i] -= q;
+					time += q;
 					// 현재 실행 중 프로세스의 남은 시간 감소
+					remain_burst_time[i] -= q;
 				}
 
 				/* 남은 시간이 시간 할당량보다 작을 경우 */
 				else
 				{
-					time += remain_burst_time[i];
 					// 현재 시간 남은 시간만큼 증가
-					process[i].waiting_time = time - process[i].cpu_burst;
+					time += remain_burst_time[i];
 					// 대기 시간 계산
-					remain_burst_time[i] = 0;
+					process[i].waiting_time = time - process[i].cpu_burst;
 					// 남은 시간을 0으로 바꾸어줌
+					remain_burst_time[i] = 0;
 				}
 			}
 		}
 
-		/* 모든 프로세스가 완료되었을 경우 */
+		// check 가 true이면 프로세스가 모두 실행 완료 -> while 나감
 		if (check == TRUE)
 			break;
-			// 무한 루프 탈출
 	}
 
 	free(remain_burst_time);
-	// 동적 할당한 배열 메모리 할당 해제
 }
 
 /**
- * [rr_calculate_turnaround_time 턴어라운드 타임 계산 함수]
+ * turnaround time 계산 함수
  * @param process   프로세스 배열
  * @param process_count 프로세스 개수
  */
@@ -106,12 +103,12 @@ void rr_calculate_turnaround_time(Process *process, int process_count)
 
 	/* 프로세스의 갯수만큼 반복 */
 	for (i = 0; i < process_count; i++)
-		process[i].turnaround_time = process[i].cpu_burst + process[i].waiting_time - process[i].arrival_time;
 		// 턴어라운드 타임 계산 후 저장
+		process[i].turnaround_time = process[i].cpu_burst + process[i].waiting_time - process[i].arrival_time;
 }
 
 /**
- * Round Robin 간트 차트 출력 함수]
+ * Round Robin 간트 차트 출력 함수
  * @param process   프로세스 배열
  * @param process_count 프로세스 개수
  * @param q   time quantum
@@ -119,9 +116,8 @@ void rr_calculate_turnaround_time(Process *process, int process_count)
 void rr_gantt(Process *process, int process_count, Quantum q)
 {
 	int i, j;
-	// 반복문에서 사용할 변수 선언
-	int curr_time = 0, total_burst_time = 0;
 	// 현재 시간과 총 실행 시간을 저장할 변수 선언 및 초기화
+	int time = 0, total_burst_time = 0;
 	int temp_total_burst_time = 0;
 	// 임시로 값을 저장할 변수 선언 및 초기화
 
@@ -166,14 +162,14 @@ void rr_gantt(Process *process, int process_count, Quantum q)
 
 				if (remain_burst_time[i] > q)
 				{
-					curr_time += q;
+					time += q;
 					remain_burst_time[i] -= q;
 				}
 
 				else
 				{
-					curr_time += remain_burst_time[i];
-					process[i].waiting_time = curr_time - process[i].cpu_burst;
+					time += remain_burst_time[i];
+					process[i].waiting_time = time - process[i].cpu_burst;
 					remain_burst_time[i] = 0;
 				}
 
@@ -237,14 +233,14 @@ void rr_gantt(Process *process, int process_count, Quantum q)
 
 				if (remain_burst_time[i] > q)
 				{
-					curr_time += q;
+					time += q;
 					remain_burst_time[i] -= q;
 				}
 
 				else
 				{
-					curr_time += remain_burst_time[i];
-					process[i].waiting_time = curr_time - process[i].cpu_burst;
+					time += remain_burst_time[i];
+					process[i].waiting_time = time - process[i].cpu_burst;
 					remain_burst_time[i] = 0;
 				}
 
@@ -290,14 +286,14 @@ void rr_gantt(Process *process, int process_count, Quantum q)
 
 				if (remain_burst_time[i] > q)
 				{
-					curr_time += q;
+					time += q;
 					remain_burst_time[i] -= q;
 				}
 
 				else
 				{
-					curr_time += remain_burst_time[i];
-					process[i].waiting_time = curr_time - process[i].cpu_burst;
+					time += remain_burst_time[i];
+					process[i].waiting_time = time - process[i].cpu_burst;
 					remain_burst_time[i] = 0;
 				}
 
@@ -314,7 +310,7 @@ void rr_gantt(Process *process, int process_count, Quantum q)
 	for (i = 0; i < process_count; i++)
 		remain_burst_time[i] = process[i].cpu_burst;
 
-	curr_time = 0;
+	time = 0;
 
 	/* 프로세스 시간 출력 */
 	while (TRUE)
@@ -329,7 +325,7 @@ void rr_gantt(Process *process, int process_count, Quantum q)
 
 				if (remain_burst_time[i] < q)
 				{
-					printf("%-2d", curr_time);
+					printf("%-2d", time);
 
 					for (j = 0; j < remain_burst_time[i] - 1; j++)
 						printf("  ");
@@ -339,7 +335,7 @@ void rr_gantt(Process *process, int process_count, Quantum q)
 
 				else
 				{
-					printf("%-2d", curr_time);
+					printf("%-2d", time);
 
 					for (j = 0; j < q; j++)
 						printf("  ");
@@ -349,14 +345,14 @@ void rr_gantt(Process *process, int process_count, Quantum q)
 
 				if (remain_burst_time[i] > q)
 				{
-					curr_time += q;
+					time += q;
 					remain_burst_time[i] -= q;
 				}
 
 				else
 				{
-					curr_time += remain_burst_time[i];
-					process[i].waiting_time = curr_time - process[i].cpu_burst;
+					time += remain_burst_time[i];
+					process[i].waiting_time = time - process[i].cpu_burst;
 					remain_burst_time[i] = 0;
 				}
 			}
@@ -375,7 +371,7 @@ void rr_gantt(Process *process, int process_count, Quantum q)
 }
 
 /**
- * RoundRobin 알고리즘 함수
+ * Round Robin 알고리즘 함수
  * @param process       프로세스 배열
  * @param process_count     프로세스 개수
  * @param quantum           time quantum
@@ -384,39 +380,36 @@ void RR(Process *process, int process_count, Quantum quantum)
 {
 	int i;
 
-	// 총 대기 시간을 저장할 변수 선언 및 초기화
+	// 총 합 변수들 초기화
 	int total_waiting_time = 0;
-	// 총 턴어라운드 타임을 저장할 변수 선언 및 초기화
 	int total_turnaround_time = 0;
-	// 총 응답 시간을 저장할 변수 선언 및 초기화
 	int total_response_time = 0;
 
 	// process_init 함수 호출로 프로세스 초기화
 	process_init(process, process_count);
 
-	// merge_sort_by_arrival_time 함수 호출로 도착 시간을 기준으로 정렬
+	// 도착 시간 기준 정렬
 	merge_sort_by_arrival_time(process, 0, process_count);
 
-	// rr_calculate_waiting_time 함수 호출로 대기 시간, 응답 시간 계산
+	// waiting time 계산
 	rr_calculate_waiting_time(process, process_count, quantum);
 
-	// rr_calculate_turnaround_time 함수 호출로 턴어라운드 타임 계산
+	// turnaround time 계산
 	rr_calculate_turnaround_time(process, process_count);
 
-	/* 프로세스의 갯수만큼 반복 */
+	// 총 합 구함
 	for (i = 0; i < process_count; i++)
 	{
-		process[i].waiting_time = process[i].turnaround_time - process[i].cpu_burst;
 		// 대기 시간 계산 후 저장
-		process[i].return_time = process[i].arrival_time + process[i].cpu_burst + process[i].waiting_time;
+		process[i].waiting_time = process[i].turnaround_time - process[i].cpu_burst;
 		// 반환 시간 계산 후 저장
-
-		total_waiting_time += process[i].waiting_time;
+		process[i].return_time = process[i].arrival_time + process[i].cpu_burst + process[i].waiting_time;
 		// 총 대기 시간 증가
-		total_turnaround_time += process[i].turnaround_time;
+		total_waiting_time += process[i].waiting_time;
 		// 총 턴어라운드 타임 증가
-		total_response_time += process[i].response_time;
+		total_turnaround_time += process[i].turnaround_time;
 		// 총 응답 시간 증가
+		total_response_time += process[i].response_time;
 	}
 
 	printf("\nRound Robin Scheduling Algorithm ( Quantum : %d )\n\n", quantum);
@@ -429,8 +422,8 @@ void RR(Process *process, int process_count, Quantum quantum)
 	printf("tAverage Turnaround Time  : %-2.2lf\n", (double)total_turnaround_time / (double)process_count);
 	// printf("Average Response Time    : %-2.2lf\n\n", (double)total_response_time / (double)process_count);
 
-	print_table(process, process_count);
 	// print_table 함수 호출로 데이터 표 출력
+	print_table(process, process_count);
 }
 
 

@@ -68,11 +68,11 @@ void npps_calculate(Process *process, int process_count)
 
 
 /**
- * npps_print_gantt_chart 간트 차트 출력 함수
+ * 간트 차트 출력 함수
  * @param process   프로세스 배열
  * @param process_count 프로세스 개수
  */
-void npps_print_gantt_chart(Process *process, int len)
+void npps_gantt(Process *process, int len)
 {
 	int i, j;
 
@@ -175,8 +175,8 @@ void NPPS(Process *process, int process_count)
 
 	printf("\nNon-preemptive Priority Scheduling Algorithm\n\n");
 
-	// npps_print_gantt_chart 함수 호출로 간트 차트 출력
-	npps_print_gantt_chart(process, process_count);
+	// npps_gantt 함수 호출로 간트 차트 출력
+	npps_gantt(process, process_count);
 
 	/* 평균 대기시간, 턴어라운드 타임, 응답 시간 출력 */
 	printf("\nAverage Waiting Time     : %-2.2lf\n", (double)total_waiting_time / (double)process_count);

@@ -54,6 +54,8 @@ void psjf_calculate_time(Process *process, int process_count)
 		shortest_remain_time = INT_MAX;
 		// 최소작업 인덱스를 INT_MAX로 초기화
 
+		// process는 arrival_time으로 정렬된 상태
+		// process 배열의 마지막 프로세스는 arrival_time이 가장 큰 상태
 		/* 가장 마지막에 들어온 프로세스의 도착시간 보다 작을 경우 */
 		if (current_time <= process[process_count - 1].arrival_time)
 		{
@@ -66,10 +68,10 @@ void psjf_calculate_time(Process *process, int process_count)
 						&& (process[i].arrival_time <= current_time)
 							&& (shortest_remain_time > remain_burst_time[i]))
 				{
-					shortest_remain_time = remain_burst_time[i];
 					// 최소 작업 시간 갱신
-					k = i;
+					shortest_remain_time = remain_burst_time[i];
 					// 최소 작업 프로세스 인덱스 갱신
+					k = i;
 				}
 			}
 		}
@@ -85,10 +87,10 @@ void psjf_calculate_time(Process *process, int process_count)
 				if ((process[i].completed == FALSE)
 						&& (shortest_remain_time > remain_burst_time[i]))
 				{
-					shortest_remain_time = remain_burst_time[i];
 					// 최소 작업 시간 갱신
-					k = i;
+					shortest_remain_time = remain_burst_time[i];
 					// 최소 작업 프로세스 인덱스 갱신
+					k = i;
 				}
 			}
 		}
@@ -96,26 +98,26 @@ void psjf_calculate_time(Process *process, int process_count)
 		/* 선택된 프로세스가 처음 시작될 경우 */
 		if (count[k] == 0)
 		{
-			count[k]++;
 			// 초기 실행이 아님을 표시
-			process[k].response_time = current_time;
+			count[k]++;
 			// 실행중인 프로세스의 응답시간 저장
+			process[k].response_time = current_time;
 		}
 
-		remain_burst_time[k]--;
 		// 실행된 프로세스의 남은 시간 감소
-		current_time++;
+		remain_burst_time[k]--;
 		// 현재 시간 증가
+		current_time++;
 
 		/* 프로세스의 남은 실행 시간이 0이될 경우 */
 		if (remain_burst_time[k] == 0)
 		{
-			process[k].completed = TRUE;
 			// 완료 상태로 변경
-			process[k].waiting_time = current_time - process[k].cpu_burst - process[k].arrival_time;
+			process[k].completed = TRUE;
 			// 대기 시간 계산
-			process[k].return_time = current_time;
+			process[k].waiting_time = current_time - process[k].cpu_burst - process[k].arrival_time;
 			// 반환 시간 계산
+			process[k].return_time = current_time;
 		}
 	}
 
@@ -129,16 +131,16 @@ void psjf_calculate_time(Process *process, int process_count)
  * @param p   프로세스 배열
  * @param process_count 프로세스 개수
  */
-void psjf_print_gantt_chart(Process *process, int process_count)
+void psjf_gantt(Process *process, int process_count)
 {
 	int i;
 	int total_burst_time = 0;
-	int current_time = 0, previous_time;
 	// 이전 프로세스가 실행된 시간을 저장할 변수 추가 선언
-	int k, pre_k = 0;
+	int current_time = 0, previous_time;
 	// 이전 프로세스 번호를 저장할 변수 추가 선언
-	int shortest_remain_time, num;
+	int k, pre_k = 0;
 	// 새로 실행된 프로세스 사이 거리를 저장할 변수 선언
+	int shortest_remain_time, num;
 
 	int *count = (int *)malloc(sizeof(int) * process_count);
 	int *remain_burst_time = (int *)malloc(sizeof(int) * process_count);
@@ -491,21 +493,21 @@ void pSJF(Process *process, int process_count)
 
 	/* 프로세스의 갯수 만큼 반복 */
 	for (i = 0; i < process_count; i++)
-	{
-		process[i].turnaround_time = process[i].return_time - process[i].arrival_time;
+	{	
 		// 턴어라운드 타임 계산
-		total_waiting_time += process[i].waiting_time;
+		process[i].turnaround_time = process[i].return_time - process[i].arrival_time;
 		// 총 대기 시간 증가
-		total_turnaround_time += process[i].turnaround_time;
+		total_waiting_time += process[i].waiting_time;
 		// 총 턴어라운드 타임 증가
-		total_response_time += process[i].response_time;
+		total_turnaround_time += process[i].turnaround_time;
 		// 총 응답 시간 증가
+		total_response_time += process[i].response_time;
 	}
 
 	printf("preemptive Shortest Job First\n\n");
 
-	psjf_print_gantt_chart(process, process_count);
-	// psjf_print_gantt_chart 함수 호출로 간트 차트 출력
+	// 간트 차트 출력
+	psjf_gantt(process, process_count);
 
 	/* 평균 대기시간, 턴어라운드 타임, 응답 시간 출력 */
 	printf("\nAverage Waiting Time     : %-2.2lf\n", (double)total_waiting_time / (double)process_count);
